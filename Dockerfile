@@ -26,7 +26,7 @@ WORKDIR ${COMFY_ROOT}
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
-COPY extra_model_paths.yaml ${COMFY_ROOT}/
+#COPY extra_model_paths.yaml ${COMFY_ROOT}/
 
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility \
     NVIDIA_VISIBLE_DEVICES=all \
