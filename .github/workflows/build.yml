@@ -1,6 +1,8 @@
 name: Build and Push image
 
 on:
+  repository_dispatch:
+    types: [build-new-release]
   push:
     branches: [ main ]
     paths: [ 'Dockerfile', '.github/workflows/**' ]
@@ -26,6 +28,8 @@ jobs:
           echo "version=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
         elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           echo "version=${{ github.event.inputs.comfy_tag }}" >> "$GITHUB_OUTPUT"
+        elif [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+          echo "version=${{ github.event.client_payload.comfy_tag }}" >> "$GITHUB_OUTPUT"
         else
           echo "version=$(grep -oP 'ARG COMFYUI_VERSION=\K.*' Dockerfile)" >> "$GITHUB_OUTPUT"
         fi
